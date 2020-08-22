@@ -23,9 +23,6 @@ class CreateProductService {
 
     product = await this.productsRepository.findByName(name);
 
-    // console.log('product', product);
-    // console.log('products', await this.productsRepository.findAll());
-
     if (product) {
       throw new AppError(`Product ${name} already registred.`);
     }
