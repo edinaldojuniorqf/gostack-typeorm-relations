@@ -1,28 +1,35 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-
 import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 
+@Entity('products')
 class Product {
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  public id: string;
 
-  name: string;
+  @Column()
+  public name: string;
 
-  price: number;
+  @Column({ type: 'numeric', precision: 9, scale: 2 })
+  public price: number;
 
-  quantity: number;
+  @Column()
+  public quantity: number;
 
-  order_products: OrdersProducts[];
+  @OneToMany(() => OrdersProducts, order_products => order_products.product)
+  public order_products!: OrdersProducts[];
 
-  created_at: Date;
+  @CreateDateColumn()
+  public created_at: Date;
 
-  updated_at: Date;
+  @UpdateDateColumn()
+  public updated_at: Date;
 }
 
 export default Product;
